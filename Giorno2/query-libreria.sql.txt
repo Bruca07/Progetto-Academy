@@ -1,0 +1,67 @@
+ 1. Recupera tutti i libri ordinati per prezzo in modo crescente
+SELECT * FROM LIBRI ORDER BY prezzo ASC;
+
+ 2. Recupera i libri disponibili con prezzo compreso tra 10 e 20 euro
+SELECT * FROM LIBRI 
+WHERE disponibile = 1 
+AND prezzo BETWEEN 10 AND 20;
+
+ 3. Recupera titolo e autore dei libri il cui autore contiene la lettera 'a'
+SELECT titolo AS "Titolo Libro", autore AS "Autore"
+FROM LIBRI
+WHERE autore LIKE '%a%';
+
+ 4. Recupera i primi 5 libri pubblicati tra il 2000 e il 2015, ordinati per anno decrescente
+SELECT * FROM LIBRI 
+WHERE anno BETWEEN 2000 AND 2015 
+ORDER BY anno DESC 
+LIMIT 5;
+
+ 5. Recupera i libri di genere Fantasy o Fantascienza usando l'operatore IN
+SELECT * FROM LIBRI WHERE genere IN ('Fantasy', 'Fantascienza');
+
+6. Conta il numero totale di libri presenti nella tabella
+SELECT COUNT(*) AS "Totale Libri" FROM LIBRI;
+
+7. Calcola prezzo medio, massimo e minimo di tutti i libri
+SELECT AVG(prezzo) AS "Prezzo Medio", 
+       MAX(prezzo) AS "Prezzo Massimo", 
+       MIN(prezzo) AS "Prezzo Minimo" 
+FROM LIBRI;
+
+8. Numero di libri e prezzo medio per ogni genere, ordinati per quantità decrescente
+SELECT genere, 
+       COUNT(*) AS "Numero Libri", 
+       AVG(prezzo) AS "Prezzo Medio"
+FROM LIBRI
+GROUP BY genere
+ORDER BY COUNT(*) DESC;
+
+9. Generi che hanno più di 2 libri (HAVING)
+SELECT genere, 
+       COUNT(*) AS "Numero Libri"
+FROM LIBRI
+GROUP BY genere
+HAVING COUNT(*) > 2;
+
+10. Titolo in maiuscolo e lunghezza del titolo
+SELECT UPPER(titolo) AS "Titolo Maiuscolo", 
+       LENGTH(titolo) AS "Lunghezza Titolo"
+FROM LIBRI;
+
+11. Calcolo del prezzo con IVA al 22% arrotondato
+SELECT titolo, 
+       prezzo AS "Prezzo Originale", 
+       ROUND(prezzo * 1.22, 2) AS "Prezzo con IVA"
+FROM LIBRI;
+
+12. BONUS: Calcolo anni passati dalla pubblicazione
+SELECT titolo, 
+       anno AS "Anno Pubblicazione", 
+       YEAR(CURDATE()) AS "Anno Corrente",
+       (YEAR(CURDATE()) - anno) AS "Anni passati"
+FROM LIBRI;
+
+ RISULTATO QUERY PUNTO 6:
+Il numero totale di libri nella tabella è: 10
+

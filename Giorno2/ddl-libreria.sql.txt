@@ -1,0 +1,23 @@
+Creazione della tabella LIBRI
+CREATE TABLE LIBRI (
+    id INT PRIMARY KEY,
+    titolo VARCHAR(255) NOT NULL,
+    autore VARCHAR(100) NOT NULL,
+    genere VARCHAR(50) NOT NULL,
+    anno INT,
+    prezzo DECIMAL(10, 2),
+    disponibile INTEGER DEFAULT 1
+);
+ Ho inserito 10 libri con dati variati
+INSERT INTO LIBRI (id, titolo, autore, genere, anno, prezzo, disponibile) VALUES
+(1, 'Il nome della rosa', 'Umberto Eco', 'Giallo storico', 1980, 15.50, 1),
+(2, '1984', 'George Orwell', 'Romanzo', 1949, 12.00, 1),
+(3, 'Il Signore degli Anelli', 'J.R.R. Tolkien', 'Fantasy', 1954, 25.00, 0),
+(4, 'Polizia', 'Jo Nesbo', 'Poliziesco', 2024, 10.50, 1),
+(5, 'Piccole Donne', 'Louisa May Alcott', 'Romanzo', 1908, 14.20, 1),
+(6, 'Harry Potter', 'J.K.  Rowling', 'Fantascienza', 1998, 11.00, 1),
+(7, 'Il ritratto di Dorian Gray', 'Oscar Wilde', 'Classico', 1890, 9.90, 1),
+(8, 'Lo Hobbit', 'J.R.R. Tolkien', 'Fantasy', 1937, 18.50, 1),
+(9, 'La Coscienza di Zeno', 'Italo Svevo', 'Romanzo', 1923, 13.00, 0),
+(10, 'Uno, nessuno e centomila', 'Pirandello', 'Romanzo', 1926, 12.50, 1);
+
