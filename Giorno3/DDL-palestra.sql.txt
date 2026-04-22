@@ -1,0 +1,35 @@
+-- Creazione del Database
+CREATE DATABASE IF NOT EXISTS palestra_db;
+USE palestra_db;
+
+-- Tabella SOCI
+CREATE TABLE SOCI (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    cognome VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    data_iscrizione DATE,
+    attivo INT DEFAULT 1
+);
+
+-- Tabella CORSI
+CREATE TABLE CORSI (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    istruttore VARCHAR(100),
+    max_partecipanti INT,
+    livello VARCHAR(20)
+);
+
+-- Tabella ISCRIZIONI (Tabella Ponte)
+CREATE TABLE ISCRIZIONI (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    socio_id INT,
+    corso_id INT,
+    data_iscrizione DATE,
+    FOREIGN KEY (socio_id) REFERENCES SOCI(id),
+    FOREIGN KEY (corso_id) REFERENCES CORSI(id)
+);
+
+-- Modifica strutturale richiesta
+ALTER TABLE CORSI ADD COLUMN costo_mensile DECIMAL(6,2);

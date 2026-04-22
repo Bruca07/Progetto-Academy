@@ -1,0 +1,50 @@
+USE palestra_db;
+
+-- Disabilitazione safe updates per permettere gli aggiornamenti via nome
+SET SQL_SAFE_UPDATES = 0;
+
+-- Inserimento SOCI
+INSERT INTO SOCI (nome, cognome, email, data_iscrizione, attivo) VALUES 
+('Mario', 'Rossi', 'mario.rossi@email.it', '2024-01-10', 1),
+('Anna', 'Verdi', 'anna.verdi@email.it', '2024-02-15', 1),
+('Luca', 'Neri', 'luca.neri@email.it', '2024-03-05', 1),
+('Giulia', 'Bianchi', 'giulia.b@email.it', '2024-03-20', 1),
+('Paolo', 'Bruni', 'p.bruni@email.it', '2024-04-01', 1);
+
+-- Inserimento CORSI
+INSERT INTO CORSI (nome, istruttore, max_partecipanti, livello) VALUES 
+('Pilates', 'Elena Sandri', 15, 'Principiante'),
+('Crossfit', 'Marco Forti', 10, 'Avanzato'),
+('Yoga', 'Sara Luce', 20, 'Intermedio');
+
+-- Assegnazione costi mensili
+UPDATE CORSI SET costo_mensile = 35.00 WHERE nome = 'Pilates';
+UPDATE CORSI SET costo_mensile = 50.00 WHERE nome = 'Crossfit';
+UPDATE CORSI SET costo_mensile = 40.00 WHERE nome = 'Yoga';
+
+-- Inserimento ISCRIZIONI
+INSERT INTO ISCRIZIONI (socio_id, corso_id, data_iscrizione) VALUES 
+(1, 1, '2024-01-12'), 
+(1, 3, '2024-01-15'), 
+(2, 1, '2024-02-20'), 
+(3, 2, '2024-03-10'), 
+(4, 2, '2024-03-22'), 
+(4, 3, '2024-03-25');
+
+-- Manutenzione dati
+UPDATE SOCI SET email = 'mario.nuovaemail@esempio.it' WHERE id = 1;
+UPDATE SOCI SET attivo = 0 WHERE id = 2; -- Disiscrizione socio 2
+DELETE FROM ISCRIZIONI WHERE id = 3; -- Eliminazione di un'iscrizione di prova
+
+--Soci attivi e relativi corsi
+SELECT S.nome, S.cognome, C.nome AS "Corso", I.data_iscrizione
+FROM SOCI S
+JOIN ISCRIZIONI I ON S.id = I.socio_id
+JOIN CORSI C ON I.corso_id = C.id
+WHERE S.attivo = 1;
+
+-- QUERY FINALE: Conteggio iscrizioni per corso
+SELECT C.nome AS "Nome Corso", COUNT(I.id) AS "Numero Iscritti"
+FROM CORSI C
+LEFT JOIN ISCRIZIONI I ON C.id = I.corso_id
+GROUP BY C.nome;
