@@ -1,0 +1,20 @@
+1. Scope APPLICATION (/pagina)
+Cosa rimane uguale: Il numero del contatore. Se nel primo browser sei arrivata a "10", nel secondo browser vedrai "11".
+
+Cosa cambia: Assolutamente nulla. È una memoria globale che appartiene al server, non al browser.
+
+Perché: I dati nel ServletContext sono condivisi da tutti gli utenti dell'applicazione.
+
+2. Scope SESSION (/utente)
+Cosa rimane uguale: Nulla. Ogni browser ricomincia da capo.
+
+Cosa cambia: Il valore del contatore. Se nel browser A vedi "5", nel browser B (incognito) vedrai "1".
+
+Perché: Tomcat crea una sessione nuova per ogni browser diverso. Finché non chiudi il browser, lui "ricorda" chi sei tramite un cookie (JSESSIONID), ma se apri l'incognito, quel cookie non esiste e il server ti tratta come un nuovo estraneo.
+
+3. Scope REQUEST (/echo)
+Cosa rimane uguale: Il comportamento (se metti lo stesso parametro nell'URL).
+
+Cosa cambia: Tutto ad ogni click. Non c'è memoria storica.
+
+Perché: Lo scope request nasce quando premi "Invio" e muore un millisecondo dopo, quando la pagina appare sullo schermo. Non importa quale browser usi: non c'è persistenza tra una chiamata e l'altra.
