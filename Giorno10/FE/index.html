@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Directory</title>
+    <!-- Collegamento al file esterno style.css -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>User Directory</h1>
+
+    <!-- Sezione Ricerca -->
+    <section style="margin-bottom: 30px; width: 100%; max-width: 600px;">
+        <input type="text" placeholder="Cerca un utente..." 
+               style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px;">
+    </section>
+
+    <!-- Lista Utenti (Layout Flex gestito in style.css) -->
+    <ul class="user-list">
+        
+        <!-- Card Mario Rossi -->
+        <li class="user-card">
+            <div class="user-info">
+                <h3>Mario Rossi</h3>
+                <p>mario@rossi.com</p>
+            </div>
+            <a href="dettaglio.html" class="btn-dettaglio">Dettagli →</a>
+        </li>
+
+        <!-- Card Luca Bianchi -->
+        <li class="user-card">
+            <div class="user-info">
+                <h3>Luca Bianchi</h3>
+                <p>luca@bianchi.com</p>
+            </div>
+            <a href="dettaglio-luca.html" class="btn-dettaglio">Dettagli →</a>
+        </li>
+
+        <!-- Card Marco Esposito -->
+        <li class="user-card">
+            <div class="user-info">
+                <h3>Marco Esposito</h3>
+                <p>marco@esposito.com</p>
+            </div>
+            <a href="dettaglio-marco.html" class="btn-dettaglio">Dettagli →</a>
+        </li>
+
+    </ul>
+
+</body>
+</html>

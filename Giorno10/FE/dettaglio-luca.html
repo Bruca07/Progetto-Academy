@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Dettaglio Utente</title>
+    <style>
+        /* 1. RIMOZIONE MARGINI E FONT (COERENZA) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            display: flex; /* Layout Flex per centrare la card */
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Prende tutta l'altezza dello schermo */
+        }
+
+        /* 2. CARD DETTAGLIO */
+        .detail-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #1c1e21;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .info-group {
+            margin-bottom: 15px;
+            text-align: left; /* Allinea i testi a sinistra dentro la card */
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .info-group strong {
+            color: #3498db;
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .info-group p {
+            font-size: 18px;
+            color: #2c3e50;
+        }
+
+        /* 3. BOTTONE TORNA INDIETRO */
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #7f8c8d;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="detail-card">
+        <h1>Profilo Utente</h1>
+        
+        <section>
+            <div class="info-group">
+                <strong>Nome Completo</strong>
+                <p>Luca Bianchi</p>
+            </div>
+            
+            <div class="info-group">
+                <strong>Indirizzo Email</strong>
+                <p>luca@bianchi.com</p>
+            </div>
+        </section>
+
+        <a href="index.html" class="back-link">← Torna alla Directory</a>
+    </div>
+
+</body>
+</html>
