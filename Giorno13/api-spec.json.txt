@@ -1,0 +1,538 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Gestione Studenti Academy",
+    "description": "Documentazione interattiva delle API per la gestione dell'anagrafica studenti. Il sistema permette operazioni CRUD, paginazione e ricerche personalizzate.",
+    "contact": {
+      "name": "Il Tuo Nome",
+      "email": "tua.email@esempio.it"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Studenti",
+      "description": "API per la gestione completa dell'anagrafica degli studenti"
+    }
+  ],
+  "paths": {
+    "/api/studenti/{id}": {
+      "get": {
+        "tags": [
+          "Studenti"
+        ],
+        "summary": "Cerca uno studente per ID",
+        "description": "Restituisce i dettagli di un singolo studente specificando il suo identificativo univoco",
+        "operationId": "findById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Studente trovato con successo",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Studente"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Studente non trovato per l'ID fornito",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Studente"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Studenti"
+        ],
+        "summary": "Aggiorna uno studente esistente",
+        "description": "Modifica i dati di uno studente già presente a sistema cercandolo per ID",
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Studente"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Studente"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Studenti"
+        ],
+        "summary": "Elimina uno studente",
+        "description": "Rimuove definitivamente uno studente dal database tramite il suo ID",
+        "operationId": "delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Studente eliminato con successo"
+          },
+          "404": {
+            "description": "Impossibile eliminare: studente non trovato"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Studenti"
+        ],
+        "summary": "Aggiornamento parziale studente",
+        "description": "Permette di modificare solo alcuni campi dello studente (es. solo l'email o solo il corso) passando una mappa chiave-valore",
+        "operationId": "aggiornaStudente",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/studenti": {
+      "get": {
+        "tags": [
+          "Studenti"
+        ],
+        "summary": "Recupera la lista paginata degli studenti",
+        "description": "Restituisce una pagina di studenti in base ai parametri di paginazione e ordinamento",
+        "operationId": "findAll",
+        "parameters": [
+          {
+            "name": "p",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pageable"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageStudente"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Studenti"
+        ],
+        "summary": "Crea un nuovo studente",
+        "description": "Inserisce un nuovo studente nel database. L'ID viene generato automaticamente.",
+        "operationId": "create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Studente"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Studente creato correttamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Studente"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dati forniti non validi",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Studente"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/studenti/{id}/corso": {
+      "get": {
+        "tags": [
+          "Studenti"
+        ],
+        "summary": "Recupera il corso di uno studente",
+        "description": "Restituisce il nome del corso di laurea associato allo studente identificato dall'ID",
+        "operationId": "getCorsoByStudenteId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/studenti/nome/{nome}": {
+      "get": {
+        "tags": [
+          "Studenti"
+        ],
+        "summary": "Cerca studenti per parte del nome",
+        "description": "Restituisce tutti gli studenti il cui nome contiene la stringa specificata (case-insensitive)",
+        "operationId": "findByNomeContainig",
+        "parameters": [
+          {
+            "name": "nome",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Studente"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/studenti/corso/{corso}": {
+      "get": {
+        "tags": [
+          "Studenti"
+        ],
+        "summary": "Filtra studenti per corso di laurea",
+        "description": "Restituisce l'elenco degli studenti iscritti a un determinato corso di laurea",
+        "operationId": "findByCorso",
+        "parameters": [
+          {
+            "name": "corso",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Studente"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/studenti/cerca": {
+      "get": {
+        "tags": [
+          "Studenti"
+        ],
+        "summary": "Cerca studenti per cognome",
+        "description": "Restituisce una lista di studenti che hanno l'esatto cognome specificato come parametro query",
+        "operationId": "findByCognome",
+        "parameters": [
+          {
+            "name": "cognome",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Studente"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Studente": {
+        "type": "object",
+        "description": "Rappresenta l'anagrafica di uno studente all'interno del sistema",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Identificativo univoco dello studente",
+            "example": 1,
+            "readOnly": true
+          },
+          "nome": {
+            "type": "string",
+            "description": "Nome dello studente",
+            "example": "Mario"
+          },
+          "cognome": {
+            "type": "string",
+            "description": "Cognome dello studente",
+            "example": "Rossi"
+          },
+          "email": {
+            "type": "string",
+            "description": "Indirizzo email istituzionale o privato",
+            "example": "mario.rossi@esempio.it"
+          },
+          "data_nascita": {
+            "type": "string",
+            "format": "date",
+            "description": "Data di nascita dello studente",
+            "example": "2000-01-01"
+          },
+          "corsoLaurea": {
+            "type": "string",
+            "description": "Corso di laurea a cui lo studente è iscritto",
+            "example": "Informatica"
+          }
+        },
+        "required": [
+          "cognome",
+          "nome"
+        ]
+      },
+      "Pageable": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PageStudente": {
+        "type": "object",
+        "properties": {
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Studente"
+            }
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/SortObject"
+          },
+          "pageable": {
+            "$ref": "#/components/schemas/PageableObject"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PageableObject": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/SortObject"
+          },
+          "paged": {
+            "type": "boolean"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unpaged": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SortObject": {
+        "type": "object",
+        "properties": {
+          "empty": {
+            "type": "boolean"
+          },
+          "sorted": {
+            "type": "boolean"
+          },
+          "unsorted": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
