@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-TerzoProgettoApplication<terzo-progetto>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.academy.terzo_progetto.TerzoProgettoApplication",
+            "projectName": "terzo-progetto",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
