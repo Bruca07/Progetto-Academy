@@ -1,0 +1,66 @@
+VERSIONE 1 - LAZY LOADING (problema N+1)
+
+Query 1: carica solo il corso (senza studenti)
+select
+    cl1_0.id,
+    cl1_0.dipartimento,
+    cl1_0.durata_anni,
+    cl1_0.nome
+from
+    corso_laurea cl1_0
+where
+    cl1_0.id=?
+ 
+-- Query 2: carica gli studenti separatamente (triggered dal LAZY)
+select
+    s1_0.corso_laurea_id,
+    s1_0.id,
+    s1_0.cognome,
+    s1_0.data_nascita,
+    s1_0.email,
+    s1_0.nome,
+    p1_0.id,
+    p1_0.bio,
+    p1_0.data_creazione,
+    p1_0.foto_url,
+    p1_0.linkedin
+from
+    studenti s1_0
+left join
+    profilo_sutente p1_0
+        on p1_0.id=s1_0.profilo_id
+where
+    s1_0.corso_laurea_id=?
+ 
+-- PROBLEMA: Con LAZY loading vengono generate 2 query separate.
+-- Se avessimo 100 corsi, Hibernate genererebbe 101 query (1 + 100).
+-- Questo è il classico problema N+1: molto inefficiente
+
+
+
+
+VERSIONE 2 - JOIN FETCH (soluzione al problema N+1)
+Query unica: carica il corso E gli studenti in una sola query
+select
+    cl1_0.id,
+    cl1_0.dipartimento,
+    cl1_0.durata_anni,
+    cl1_0.nome,
+    s1_0.corso_laurea_id,
+    s1_0.id,
+    s1_0.cognome,
+    s1_0.data_nascita,
+    s1_0.email,
+    s1_0.nome,
+    s1_0.profilo_id
+from
+    corso_laurea cl1_0
+join
+    studenti s1_0
+        on cl1_0.id=s1_0.corso_laurea_id
+where
+    cl1_0.id=?
+ 
+-- SOLUZIONE: Con JOIN FETCH viene generata 1 sola query.
+-- Corso e studenti vengono caricati insieme in un unico accesso al DB.
+-- Molto più efficiente, soprattutto con grandi quantità di dati
